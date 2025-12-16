@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brian & Liz Wedding Countdown</title>
+  <style>
+    @keyframes floatHearts {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 15px rgba(255, 105, 180, 0.4); }
+      50% { box-shadow: 0 0 35px rgba(255, 105, 180, 0.8); }
+      100% { box-shadow: 0 0 15px rgba(255, 105, 180, 0.4); }
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7, #fbd3e9);
+      background-size: 300% 300%;
+      animation: gradientMove 10s ease infinite;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      padding: 16px;
+    }
+    
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .countdown-box {
+      width: 100%;
+      max-width: 420px;
+      box-sizing: border-box;
+      text-align: center;
+      position: relative;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 28px 22px;
+      border-radius: 25px;
+      animation: pulseGlow 3s infinite;
+      z-index: 2;
+    }
+    
+
+    h1 {
+      margin-bottom: 6px;
+      font-size: clamp(1.8rem, 5vw, 2.4rem);
+      color: #b83265;
+      letter-spacing: 1px;
+    }
+    
+
+    h2 {
+      margin-bottom: 18px;
+      font-weight: normal;
+      font-size: clamp(1rem, 4vw, 1.3rem);
+      color: #444;
+    }
+    
+
+    .timer {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    
+
+    .time-box {
+      background: linear-gradient(135deg, #ff5f9e, #ff85b3);
+      color: white;
+      padding: 16px 10px;
+      border-radius: 16px;
+      min-width: unset;
+      transition: transform 0.3s ease;
+    }
+    
+
+    .time-box:hover {
+      transform: translateY(-6px) scale(1.05);
+    }
+
+    .number {
+      font-size: clamp(1.6rem, 6vw, 2.4rem);
+      font-weight: bold;
+    }
+    
+
+    .label {
+      font-size: 0.85rem;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .subtitle {
+      margin-top: 14px;
+      font-size: clamp(0.95rem, 4vw, 1.1rem);
+      color: #b83265;
+    }
+    
+
+    .heart {
+      position: absolute;
+      bottom: -40px;
+      font-size: 24px;
+      animation: floatHearts linear infinite;
+      color: rgba(255, 105, 180, 0.7);
+    }
+      .couple-img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+    
+  </style>
+</head>
+<body>
+
+  <!-- Floating Hearts -->
+  <script>
+    const hearts = ['❤','💖','💗','💞','💕'];
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (6 + Math.random() * 6) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 12000);
+    }
+    setInterval(createHeart, 600);
+  </script>
+
+  <div class="countdown-box">
+    <img src="BriLiz.jpg" alt="Brian and Liz" class="couple-img" />
+    <h1>Brian & Liz</h1>
+    <h2>Forever Starts In… 💍✨</h2>
+    <div class="timer">
+      <div class="time-box">
+        <div class="number" id="days">0</div>
+        <div class="label">Days</div>
+      </div>
+      <div class="time-box">
+        <div class="number" id="hours">0</div>
+        <div class="label">Hours</div>
+      </div>
+      <div class="time-box">
+        <div class="number" id="minutes">0</div>
+        <div class="label">Minutes</div>
+      </div>
+      <div class="time-box">
+        <div class="number" id="seconds">0</div>
+        <div class="label">Seconds</div>
+      </div>
+    </div>
+    <div class="subtitle">Saturday • 20th December 2025</div>
+    <div class="locations">
+      <a href="https://maps.app.goo.gl/xtuRCfFsGpUHDEP27" target="_blank" class="location-btn">⛪ Church Directions</a>
+      <a href="https://maps.app.goo.gl/CaEyQNa5WnYY2VUV8" target="_blank" class="location-btn">🎉 Reception Directions</a>
+    </div>
+  </div>
+
+  <script>
+    const weddingDate = new Date('December 20, 2025 00:00:00').getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = weddingDate - now;
+
+      if (distance < 0) {
+        document.querySelector('.countdown-box').innerHTML = '<h1>🎉 Today is the Wedding Day! 🎉<br/>Brian & Liz 💍</h1>';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
